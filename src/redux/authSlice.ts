@@ -31,11 +31,11 @@ export const login = createAsyncThunk<
 
 export const register = createAsyncThunk<
   any,
-  { email: string; password: string },
+  { name: string; job: string },
   { rejectValue: string }
->("auth/register", async ({ email, password }, { rejectWithValue }) => {
+>("auth/register", async ({ name, job }, { rejectWithValue }) => {
   try {
-    const response = await registerUser(email, password);
+    const response = await registerUser(name, job);
     return response;
   } catch (error) {
     return rejectWithValue("Registration failed."); // Provide a custom error message

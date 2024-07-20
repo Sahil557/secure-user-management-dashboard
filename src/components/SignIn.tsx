@@ -23,10 +23,6 @@ const SignIn: React.FC = () => {
   const navigate = useNavigate();
   const status = useSelector((state: any) => state.auth.status);
 
-  const handleCloseSnackbar = () => {
-    dispatch(resetStatus());
-  };
-
   const handleSocialMedia = (type: string) => {
     console.log(`${type} button clicked`);
   };
@@ -57,7 +53,7 @@ const SignIn: React.FC = () => {
         <Snackbar
           type="failed"
           message="Please enter valid email id or password 🔒"
-          onClose={handleCloseSnackbar}
+          onClose={() => dispatch(resetStatus())}
         />
       )}
       <section className="h-screen">

@@ -49,3 +49,11 @@ export interface SnackbarProps {
   duration?: number;
   onClose?: () => void;
 }
+
+// Interface for DetailsCard component props
+export interface DetailsCardProps {
+  name: string;
+  ID?: number;
+  job: string;
+  joiningDate: string | Date;
+}

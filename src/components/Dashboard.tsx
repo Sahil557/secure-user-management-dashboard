@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Snackbar } from "./common";
+import { DetailsCard, Snackbar } from "./common";
 import { resetStatus } from "../redux/authSlice";
 
 const Dashboard: React.FC = () => {
@@ -8,7 +8,13 @@ const Dashboard: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const { status, user } = useSelector((state: any) => state.auth);
-  const { token: userToken, id: userID } = user;
+  const {
+    name: userName,
+    id: userID,
+    job: userJob,
+    createdAt: userCreatedDate,
+    token: userToken,
+  } = user;
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);
@@ -18,21 +24,17 @@ const Dashboard: React.FC = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
 
-  const handleCloseSnackbar = () => {
-    dispatch(resetStatus());
-  };
-
   return (
     <>
       {status === "succeeded" && (
         <Snackbar
           type="succeeded"
           message={`${
-            userID
-              ? `Thanks for joining us ${userID} 🥳`
-              : `Welcome Back 🔓 ${userToken}`
+            userToken
+              ? `Welcome Back 🔓 ${userToken}`
+              : `Hey ${userName} your account is successfully created! 🥳`
           }`}
-          onClose={handleCloseSnackbar}
+          onClose={() => dispatch(resetStatus())}
         />
       )}
       <div>
@@ -181,30 +183,22 @@ const Dashboard: React.FC = () => {
             </ul>
           </div>
         </aside>
-
-        <div className="p-4 sm:ml-64">
-          <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-            <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-              <p className="text-2xl text-gray-400 dark:text-gray-500">
-                <svg
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 18 18"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 1v16M1 9h16"
-                  />
-                </svg>
-              </p>
+        {userToken ? (
+          <div className="p-4 sm:ml-64">
+            <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+              <span className="text-2xl font-extrabold tracking-tight">
+                {userToken}
+              </span>
             </div>
           </div>
-        </div>
+        ) : (
+          <DetailsCard
+            name={userName}
+            ID={userID}
+            job={userJob}
+            joiningDate={userCreatedDate}
+          />
+        )}
       </div>
     </>
   );

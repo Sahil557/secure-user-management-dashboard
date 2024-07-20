@@ -7,3 +7,5 @@ export { default as ForgotPasswordLink } from "./ForgetPasswordLink";
 export { default as RegisterLink } from "./RegisterLinks";
 export { default as Loader } from "./Loader";
 export { default as Snackbar } from "./Snackbar";
+export { default as DetailsCard } from "./DetailsCard";
+export { default as Dropdown } from "./Dropdown";
