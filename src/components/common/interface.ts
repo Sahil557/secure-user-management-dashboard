@@ -13,6 +13,7 @@ export interface InputFieldProps {
   label: string;
   placeholder: string;
   required?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // Interface for CheckBox component props
@@ -25,7 +26,7 @@ export interface CheckBoxProps {
 
 // Interface for RegisterLinks component props
 export interface RegisterLinksProps {
-  text: string; 
+  text: string;
   link: string;
   linkTo: string;
 }

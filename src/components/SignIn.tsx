@@ -1,6 +1,8 @@
-// src/components/SignIn.tsx
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/authSlice";
+import { AppDispatch } from "../redux/store";
 import {
   Button,
   CheckBox,
@@ -9,20 +11,33 @@ import {
   Separator,
   ForgotPasswordLink,
   RegisterLink,
-} from '../common';
+} from "./common";
 
 const SignIn: React.FC = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [email, setEmail] = useState<any>("");
+  const [password, setPassword] = useState<any>("");
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const status = useSelector((state: any) => state.auth.status);
 
   const handleSocialMedia = (type: string) => {
     console.log(`${type} button clicked`);
   };
 
-  const handleLogin = () => {
-    // Perform authentication check here
-    // For demo purposes, assume authentication is successful
-    navigate('/dashboard');
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const resultAction = await dispatch(login({ email, password })).unwrap();
+      console.log("Login successful:", resultAction);
+      navigate("/dashboard");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Login failed:", error.message);
+      } else {
+        console.error("Login failed:", error);
+      }
+    }
   };
 
   const handleRememberMe = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,20 +56,24 @@ const SignIn: React.FC = () => {
             />
           </div>
           <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 lg:pr-16 xl:pr-16">
-            <form>
+            <form
+              onSubmit={(e) => {
+                handleLogin(e);
+              }}
+            >
               <div className="flex flex-row items-center justify-center">
                 <p className="mb-0 mr-4 text-lg">Sign in with</p>
                 <SocialButton
                   type="facebook"
-                  onClick={() => handleSocialMedia('facebook')}
+                  onClick={() => handleSocialMedia("facebook")}
                 />
                 <SocialButton
                   type="twitter"
-                  onClick={() => handleSocialMedia('twitter')}
+                  onClick={() => handleSocialMedia("twitter")}
                 />
                 <SocialButton
                   type="linkedin"
-                  onClick={() => handleSocialMedia('linkedin')}
+                  onClick={() => handleSocialMedia("linkedin")}
                 />
               </div>
               <Separator text="Or" />
@@ -63,14 +82,16 @@ const SignIn: React.FC = () => {
                 type="email"
                 label="Email address"
                 placeholder="john.doe@company.com"
-                required={true}
+                required
+                onChange={(e) => setEmail(e.target.value)}
               />
               <InputField
                 id="password"
                 type="password"
                 label="Password"
                 placeholder="•••••••••"
-                required={true}
+                required
+                onChange={(e) => setPassword(e?.target.value)}
               />
               <div className="mb-6 flex items-center justify-between">
                 <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -84,8 +105,12 @@ const SignIn: React.FC = () => {
                 <ForgotPasswordLink />
               </div>
               <div className="text-center">
-                <Button onClick={handleLogin} children="Login" className="mb-4"/>
-                <RegisterLink text="Don't have an account?" link="/signup" linkTo="Register" />
+                <Button children="Login" className="mb-4" type="submit" />
+                <RegisterLink
+                  text="Don't have an account?"
+                  link="/signup"
+                  linkTo="Register"
+                />
               </div>
             </form>
           </div>
