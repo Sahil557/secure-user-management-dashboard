@@ -50,6 +50,9 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
     },
+    resetStatus(state) {
+      state.status = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -80,6 +83,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetStatus } = authSlice.actions;
 
 export default authSlice.reducer;

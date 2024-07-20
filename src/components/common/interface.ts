@@ -41,3 +41,11 @@ export interface SocialButtonProps {
   type: "facebook" | "twitter" | "linkedin";
   onClick?: () => void;
 }
+
+// Interface for Snackbar component props
+export interface SnackbarProps {
+  type: string;
+  message: string;
+  duration?: number;
+  onClose?: () => void;
+}
