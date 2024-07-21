@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../redux/store";
-import { Button, InputField, RegisterLink, Snackbar, Dropdown } from "./common";
+import { Button, InputField, RegisterLink, Snackbar, Dropdown, Loader } from "./common";
 import { register, resetStatus } from "../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import { validateName } from "../utils/validateName";
@@ -11,7 +11,7 @@ const SignUp: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [job, setJob] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
-  const { error } = useSelector((state: any) => state.auth);
+  const { error, status } = useSelector((state: any) => state.auth);
   const [nameError, setNameError] = useState<string | null>(null);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +49,7 @@ const SignUp: React.FC = () => {
           onClose={() => dispatch(resetStatus())}
         />
       )}
+      {status === "loading" && <Loader />}
       <div className="flex flex-col lg:flex-row flex-1 max-w-screen-xl m-0 sm:m-6 bg-white shadow">
         <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 flex-1">
           <div className="sm:mx-auto sm:w-full sm:max-w-md lg:flex">

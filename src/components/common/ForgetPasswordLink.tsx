@@ -1,9 +1,9 @@
 import React from "react";
 
 const ForgetPasswordLink: React.FC = () => (
-  <a className="text-[#3b71ca]" href="#!">
+  <div className="text-[#3b71ca]">
     Forgot password?
-  </a>
+  </div>
 );
 
 export default ForgetPasswordLink;

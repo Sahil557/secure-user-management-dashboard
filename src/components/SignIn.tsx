@@ -16,11 +16,11 @@ import {
 } from "./common";
 
 const SignIn: React.FC = () => {
+  const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [email, setEmail] = useState<any>("");
   const [password, setPassword] = useState<any>("");
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
   const status = useSelector((state: any) => state.auth.status);
 
   const handleSocialMedia = (type: string) => {

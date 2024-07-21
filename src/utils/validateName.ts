@@ -1,6 +1,6 @@
 export const validateName = (name: string): string | null => {
   const numberRegex = /\d/;
-  const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+  const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
   if (numberRegex.test(name)) {
     return "Name cannot contain numbers.";
   }
