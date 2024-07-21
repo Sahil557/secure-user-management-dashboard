@@ -6,6 +6,7 @@ const Loader: React.FC = () => {
         <img
           src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg"
           className="rounded-full h-28 w-28"
+          alt="loader snap"
         />
       </div>
     </div>
