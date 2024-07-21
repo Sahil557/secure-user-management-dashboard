@@ -54,6 +54,7 @@ const SignIn: React.FC = () => {
           type="failed"
           message="Please enter valid email id or password 🔒"
           onClose={() => dispatch(resetStatus())}
+          duration={1000}
         />
       )}
       <section className="h-screen">

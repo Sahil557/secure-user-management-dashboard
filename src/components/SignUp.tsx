@@ -11,7 +11,7 @@ const SignUp: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [job, setJob] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
-  const { error, status } = useSelector((state: any) => state.auth);
+  const status = useSelector((state: any) => state.auth.status);
   const [nameError, setNameError] = useState<string | null>(null);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +42,7 @@ const SignUp: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-      {error && (
+      {status === "failed" && (
         <Snackbar
           type="failed"
           message="OOPS! looks like something went wrong 😮"
